@@ -2,7 +2,7 @@ export class Ship {
   constructor(length) {
     this.length = length;
     this.hitsTaken = 0;
-    this.positions = []
+    this.positions = [];
   }
   hit() {
     this.hitsTaken++;
@@ -42,15 +42,26 @@ export class GameBoard {
     }
     return true;
   }
-  receiveAttack([x, y]){
-    if (this.board[x][y]==="S"){
+  receiveAttack([x, y]) {
+    if (this.board[x][y] === "S") {
       this.ships[`${x}${y}`].hit();
       this.board[x][y] = "o"; // record hit
       return true;
-    }
-    else{
+    } else {
       this.board[x][y] = "x"; // record missed
       return false;
     }
+  }
+}
+
+export class Player {
+  constructor() {
+    this.board = new GameBoard();
+    this.ships = {
+      vessel: new Ship(1),
+      corvette: new Ship(2),
+      destroyer: new Ship(3),
+      carrier: new Ship(4),
+    };
   }
 }
