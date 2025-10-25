@@ -57,7 +57,7 @@ export class GameBoard {
 export class Player {
   constructor() {
     this.board = new GameBoard();
-    this.collections = {
+    this.ships = {
       vessel: new Ship(1),
       corvette: new Ship(2),
       destroyer: new Ship(3),
