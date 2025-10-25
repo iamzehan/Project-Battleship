@@ -1,4 +1,4 @@
-import { Ship, GameBoard } from "./index";
+import { Ship, GameBoard, Player } from "./index";
 
 let myShip = null;
 
@@ -93,3 +93,11 @@ describe("Gameboard operations", () => {
     expect(gameBoard.receiveAttack([1,0])).toBe(false); // miss
   })
 });
+
+describe("Player", ()=> {
+  test("Create Player", () => {
+    const player1 = new Player();
+    expect(player1.board.deploy(player1.ships.vessel, [0, 0])).toBe(true);
+    expect(player1.board.deploy(player1.ships.carrier, [0, 7])).toBe(false);
+  });
+})
