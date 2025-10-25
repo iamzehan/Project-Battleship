@@ -2,6 +2,7 @@ export class Ship {
   constructor(length) {
     this.length = length;
     this.hitsTaken = 0;
+    this.positions = []
   }
   hit() {
     this.hitsTaken++;
@@ -13,39 +14,31 @@ export class Ship {
 
 export class GameBoard {
   constructor() {
-    this.ships = [];
-    this.coordinates = [];
+    this.board = Array.from({ length: 10 }, () => Array(10).fill("~"));
   }
 
-  #byColumn(row, col, limit){
-    const occupy = [];
-    let i = 0;
-      while (i < limit) {
-        occupy.push([row, col + i]);
-        i++;
-      }
-    return occupy; 
-  }
-
-  #byRow(row, col, limit){
-    const occupy = [];
-    let i = 0;
-      while (i < limit) {
-        occupy.push([row + i, col]);
-        i++;
-      }
-      return occupy;
-  }
-
-  deploy(ship, coordinates, long = false) {
-    const row = coordinates[0];
-    const col = coordinates[1];
-    this.ships.push(ship);
-    if (long === true) {
-      this.coordinates.push(this.#byColumn(row, col, ship.length))
-    } else if (long == false) {
-      this.coordinates.push(this.#byRow(row, col, ship.length))
+  deploy(ship, [row, col], direction = "horizontal") {
+    if (direction === "horizontal" && col + ship.length > 10) {
+      return false;
+    } else if (direction === "vertical" && row + ship.length > 10) {
+      return false;
     }
+
+    for (let i = 0; i < ship.length; i++) {
+      const r = direction === "horizontal" ? row : row + i;
+      const c = direction === "horizontal" ? col + i : col;
+      if (this.board[r][c] !== "~") {
+        return false;
+      }
+    }
+
+    for (let i = 0; i < ship.length; i++) {
+      const r = direction === "horizontal" ? row : row + i;
+      const c = direction === "horizontal" ? col + i : col;
+      this.board[r][c] = "S";
+      ship.positions.push([r, c]);
+    }
+    return true;
   }
 }
 // const gameBoard = new GameBoard();
