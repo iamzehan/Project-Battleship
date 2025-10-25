@@ -73,4 +73,23 @@ describe("Gameboard operations", () => {
     gameBoard.deploy(myShip, [0, 0], "vertical");
     expect(myShip.positions).toEqual([[0,0],[1,0],[2,0]]);
   });
+
+  test("Attack", ()=> {
+    gameBoard.deploy(myShip, [0, 0]);
+    expect(gameBoard.receiveAttack([0,0]));
+    expect(myShip.hitsTaken).toBe(1);
+    expect(myShip.isSunk()).toBe(false);
+    expect(gameBoard.receiveAttack([0,1]));
+    expect(myShip.hitsTaken).toBe(2);
+    expect(myShip.isSunk()).toBe(false);
+    expect(gameBoard.receiveAttack([0,2]));
+    expect(myShip.hitsTaken).toBe(3);
+    expect(myShip.isSunk()).toBe(true);
+  });
+
+  test("Hit or miss", ()=> {
+    gameBoard.deploy(myShip, [0, 0]);
+    expect(gameBoard.receiveAttack([0,0])).toBe(true); // hit
+    expect(gameBoard.receiveAttack([1,0])).toBe(false); // miss
+  })
 });

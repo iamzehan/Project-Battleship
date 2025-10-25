@@ -15,6 +15,7 @@ export class Ship {
 export class GameBoard {
   constructor() {
     this.board = Array.from({ length: 10 }, () => Array(10).fill("~"));
+    this.ships = {};
   }
 
   deploy(ship, [row, col], direction = "horizontal") {
@@ -37,11 +38,19 @@ export class GameBoard {
       const c = direction === "horizontal" ? col + i : col;
       this.board[r][c] = "S";
       ship.positions.push([r, c]);
+      this.ships[`${r}${c}`] = ship;
     }
     return true;
   }
+  receiveAttack([x, y]){
+    if (this.board[x][y]==="S"){
+      this.ships[`${x}${y}`].hit();
+      this.board[x][y] = "o"; // record hit
+      return true;
+    }
+    else{
+      this.board[x][y] = "x"; // record missed
+      return false;
+    }
+  }
 }
-// const gameBoard = new GameBoard();
-// const myShip = new Ship(3);
-// gameBoard.deploy(myShip, [0, 9]);
-// console.log(gameBoard)
