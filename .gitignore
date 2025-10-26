@@ -1,0 +1,5 @@
+dist
+node_modules
+webpack.prod.js
+Data.json
+readme_assets
