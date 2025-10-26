@@ -13,6 +13,9 @@ body {
   background-image: url("../assets/battleship_background.jpg");
   background-size: cover;
 }
+.container.hide{
+  display: none;
+}
 .container {
   height: 800px;
   aspect-ratio: 1/1;
