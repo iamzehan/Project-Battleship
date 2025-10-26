@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../assets/battleship_background.jpg");
+  background-size: cover;
+}
+.container {
+  height: 800px;
+  aspect-ratio: 1/1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1em;
+
+  padding: 2em;
+  border-radius: 1em;
+  box-shadow: 0 0 15px -2px grey;
+  background-color: rgba(128, 128, 128, 0.562);
+  -webkit-backdrop-filter: radial-blur(15px);
+  backdrop-filter: blur(15px);
+
+  color: white;
+  font-family: system-ui;
+}
+
+.container .players,
+.gameboard {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  gap: 1em;
+}
+.container .players {
+  > * {
+    flex: 1;
+    text-align: center;
+    font-weight: normal;
+
+    border-radius: 0.5em;
+    background-color: transparent;
+    box-shadow: 12px 12px 15px -12px black;
+    padding: 1em;
+
+    -webkit-backdrop-filter: radial-blur(20px);
+    backdrop-filter: blur(20px);
+  }
+}
+
+.gameboard .player,
+.computer {
+  opacity: 0.5;
+  border: inherit;
+  height: 500px;
+  aspect-ratio: 1/1;
+  background-color: rgba(0, 0, 0, 0.534);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  box-shadow: 0 0 2px 1px grey;
+  .row {
+    display: flex;
+  }
+  .row,
+  .row > div {
+    flex: 1;
+    box-shadow: 0 0 5px -1px white inset;
+    transition: 0.1s background-color ease-in-out;
+  }
+  .row:not(:last-of-type) {
+    border-bottom: 1px solid white;
+  }
+  .row > div:not(:last-of-type) {
+    border-right: 1px solid white;
+  }
+  .row > div.hit {
+    color: red;
+  }
+  .row > div.miss {
+    color: white;
+  }
+  .row > div:hover {
+    cursor: crosshair;
+    caret-color: red;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.gameboard .player.attack,
+.computer.attack {
+  opacity: 1;
+  animation: 1s flash linear alternate infinite;
+}
+
+@keyframes flash{
+    from{
+        box-shadow: none;
+    }
+    to{
+        border: 2px solid white;
+        box-shadow: 0 0 15px 12px lightcoral;
+    }
+}
