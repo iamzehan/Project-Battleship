@@ -28,6 +28,7 @@ body {
 
   padding: 2em;
   border-radius: 1em;
+  border: 1px solid rgba(245, 245, 245, 0.418) outset;
   box-shadow: 0 0 15px -2px grey;
   background-color: rgba(128, 128, 128, 0.562);
   -webkit-backdrop-filter: radial-blur(15px);
@@ -51,9 +52,10 @@ body {
     text-align: center;
     font-weight: normal;
 
+    border: 1px solid rgba(211, 211, 211, 0.342) outset;
     border-radius: 0.5em;
     background-color: transparent;
-    box-shadow: 12px 12px 15px -12px black;
+    box-shadow: 12px 12px 15px -12px rgba(0, 0, 0, 0.568);
     padding: 1em;
 
     -webkit-backdrop-filter: radial-blur(20px);
@@ -112,21 +114,38 @@ body {
   }
 }
 
-.gameboard .player.attack,
-.computer.attack {
+.gameboard .attack{
   opacity: 1;
-  animation: 1s flash linear alternate infinite;
+  box-shadow: inherit;
+  animation: 1s flashOut linear alternate infinite;
   .row > div:hover{
     cursor: crosshair!important;
   }
 }
+.turn {
+  animation: 1s flashIn linear alternate infinite;
+}
+.gameboard > *{
+  box-shadow: 0 0 15px 12px lightcoral;
+}
 
-@keyframes flash {
+@keyframes flashOut {
   from {
     box-shadow: none;
   }
   to {
-    border: 2px solid white;
     box-shadow: 0 0 15px 12px lightcoral;
+  }
+}
+
+@keyframes flashIn {
+  from {
+    box-shadow:
+    12px 12px 15px -12px rgba(0, 0, 0, 0.568);
+  }
+  to {
+    background-color: lightcoral;
+    box-shadow: 
+    12px 12px 15px -12px lightcoral;
   }
 }
