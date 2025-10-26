@@ -1,6 +1,10 @@
 import { Ship, GameBoard, Player } from "../game_logic";
+import Start from './components/Start'
 import "./style.css";
 
+document.addEventListener("DOMContentLoaded", ()=> {
+  document.body.appendChild(Start.load());
+})
 const cells = document.querySelectorAll("div.attack>div.row>div");
 const comp = new Player();
 
