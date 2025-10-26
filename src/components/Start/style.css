@@ -1,0 +1,49 @@
+dialog.container{
+    justify-self: center;
+}
+
+dialog.container .player{
+  border: inherit;
+  height: 500px;
+  aspect-ratio: 1/1;
+  background-color: rgba(0, 0, 0, 0.534);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  box-shadow: 0 0 2px 1px grey;
+  .row , .row > div{
+    display: flex;
+  }
+  .row > div{
+    justify-content: center;
+    align-items: center;
+  }
+  .row,
+  .row > div {
+    flex: 1;
+    box-shadow: 0 0 5px -1px white inset;
+    transition: 0.1s background-color ease-in-out;
+    span.marker{
+      height: 50%;
+      aspect-ratio: 1/1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    }
+  }
+  .row:not(:last-of-type) {
+    border-bottom: 1px solid white;
+  }
+  .row > div:not(:last-of-type) {
+    border-right: 1px solid white;
+  }
+  .row > div[class*="col-"].preview {
+    cursor: crosshair;
+    background-color: rgba(173, 216, 230, 0.555);
+  }
+  .row > div[class*="col-"].deploy{
+    background-color: rgba(0, 128, 0, 0.527);
+  }
+}
+
