@@ -91,7 +91,7 @@ body {
     color: white;
   }
   .row > div:hover {
-    cursor: crosshair;
+    cursor: not-allowed;
     caret-color: red;
     background-color: rgba(0, 0, 0, 0.6);
   }
@@ -101,14 +101,17 @@ body {
 .computer.attack {
   opacity: 1;
   animation: 1s flash linear alternate infinite;
+  .row > div:hover{
+    cursor: crosshair!important;
+  }
 }
 
-@keyframes flash{
-    from{
-        box-shadow: none;
-    }
-    to{
-        border: 2px solid white;
-        box-shadow: 0 0 15px 12px lightcoral;
-    }
+@keyframes flash {
+  from {
+    box-shadow: none;
+  }
+  to {
+    border: 2px solid white;
+    box-shadow: 0 0 15px 12px lightcoral;
+  }
 }
