@@ -1,8 +1,10 @@
-dialog.container{
-    justify-self: center;
+dialog.container {
+  justify-self: center;
+  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.438) outset;
 }
 
-dialog.container .player{
+dialog.container .player {
   border: inherit;
   height: 500px;
   aspect-ratio: 1/1;
@@ -11,10 +13,12 @@ dialog.container .player{
   flex-direction: column;
   border: 1px solid white;
   box-shadow: 0 0 2px 1px grey;
-  .row , .row > div{
+  z-index: 1;
+  .row,
+  .row > div {
     display: flex;
   }
-  .row > div{
+  .row > div {
     justify-content: center;
     align-items: center;
   }
@@ -23,27 +27,39 @@ dialog.container .player{
     flex: 1;
     box-shadow: 0 0 5px -1px white inset;
     transition: 0.1s background-color ease-in-out;
-    span.marker{
+    span.marker {
       height: 50%;
       aspect-ratio: 1/1;
       display: flex;
       justify-content: center;
       align-items: center;
-
     }
   }
-  .row:not(:last-of-type) {
+  /* .row:not(:last-of-type) {
     border-bottom: 1px solid white;
-  }
-  .row > div:not(:last-of-type) {
-    border-right: 1px solid white;
+  } */
+  .row > div {
+    border: 1px solid white;
   }
   .row > div[class*="col-"].preview {
     cursor: crosshair;
-    background-color: rgba(173, 216, 230, 0.555);
+    background-color: rgba(173, 216, 230);
+    animation: 0.5s pulse linear alternate infinite;
   }
-  .row > div[class*="col-"].deploy{
-    background-color: rgba(0, 128, 0, 0.527);
+  .row > div[class*="col-"].deploy {
+    background-color: lightgreen;
+    border-color: lightgreen;
+    &:hover {
+      cursor: not-allowed;
+    }
   }
 }
 
+@keyframes pulse {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
