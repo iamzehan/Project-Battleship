@@ -1,4 +1,4 @@
-import { Ship, GameBoard, Player } from "../game_logic";
+import { Ship, GameBoard, Player } from "./game_logic";
 import Start from './components/Start'
 import "./style.css";
 
