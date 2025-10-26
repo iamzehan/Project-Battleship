@@ -69,14 +69,26 @@ body {
   flex-direction: column;
   border: 1px solid white;
   box-shadow: 0 0 2px 1px grey;
-  .row {
+  .row , .row > div{
     display: flex;
+  }
+  .row > div{
+    justify-content: center;
+    align-items: center;
   }
   .row,
   .row > div {
     flex: 1;
     box-shadow: 0 0 5px -1px white inset;
     transition: 0.1s background-color ease-in-out;
+    span.marker{
+      height: 50%;
+      aspect-ratio: 1/1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    }
   }
   .row:not(:last-of-type) {
     border-bottom: 1px solid white;
@@ -85,10 +97,10 @@ body {
     border-right: 1px solid white;
   }
   .row > div.hit {
-    color: red;
+    background-color: rgba(255, 0, 0, 0.295);
   }
   .row > div.miss {
-    color: white;
+    background-color: rgba(135, 207, 235, 0.37);
   }
   .row > div:hover {
     cursor: not-allowed;
