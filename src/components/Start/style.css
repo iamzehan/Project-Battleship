@@ -1,7 +1,30 @@
+dialog[open].container{
+  display: flex;
+  align-self: center;
+  &::backdrop{
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.432);
+  }
+}
 dialog.container {
+  display: none;
   justify-self: center;
   border: none;
   border: 1px solid rgba(255, 255, 255, 0.438) outset;
+  .start-btn{
+    background-color: lightcoral;
+    color: white;
+    font-size: 2rem;
+    padding: 0 1em;
+    border-radius: 0.25em;
+    border: none;
+    &:active{
+      background-color: white;
+      color: lightcoral;
+      transform: scale(0.95);
+    }
+  }
 }
 
 dialog.container .player {
