@@ -55,7 +55,7 @@ dialog.container .player {
   }
 }
 
-.ships {
+select{
   font-size: 2rem;
   border-radius: 0.2em;
 }

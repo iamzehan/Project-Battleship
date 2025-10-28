@@ -7,10 +7,13 @@ export default class Start {
     this.player = new Player();
     this.dialog = document.createElement("dialog");
     this.dialog.className = "container";
-    this.select = document.createElement("select");
-    this.select.className = "ships";
-    this.select.innerHTML = template;
+
+    this.select = this.#createSelectElement();
     this.dialog.appendChild(this.select);
+
+    this.align = this.#createAlignElement();
+    this.dialog.appendChild(this.align);
+
     this.gameboard = document.body
       .querySelector("div.gameboard>div.player")
       .cloneNode(true);
@@ -19,13 +22,42 @@ export default class Start {
     this.#placingShipEvent();
   }
 
+  #createSelectElement(){
+    let select = document.createElement("select");
+    select.className = "ships";
+    Object.entries(this.player.ships).forEach(([k, v])=>{
+      let option = document.createElement("option");
+      option.className=k;
+      option.value = k;
+      option.textContent = k[0].toUpperCase()+k.slice(1,);
+      select.appendChild(option)
+    })
+    return select;
+  }
+  #createAlignElement(){
+    let align = document.createElement("select");
+    align.className="align";
+    let option1 = document.createElement("option");
+    let option2 = document.createElement("option");
+    option1.textContent = "Horizontal";
+    option2.textContent = "Vertical";
+
+    option1.value = "horizontal";
+    option2.value = "vertical"
+
+    align.appendChild(option1);
+    align.appendChild(option2);
+
+    return align;
+    
+  }
   #deployShipPreview(cell, length, align) {
     // get the cell numbers
     const [x, y] = cell.className.split("-")[1].split("");
     //bounds check
     if (
-      (align === "h" && parseInt(y) + length > 10) ||
-      (align === "v" && parseInt(x) + length > 10)
+      (align === "horizontal" && parseInt(y) + length > 10) ||
+      (align === "vertical" && parseInt(x) + length > 10)
     ) {
       return null;
     }
@@ -33,7 +65,7 @@ export default class Start {
     const cells = [];
     for (let i = 0; i < length; i++) {
       const cellNo =
-        align === "h" ? `${x}${parseInt(y) + i}` : `${parseInt(x) + i}${y}`;
+        align === "horizontal" ? `${x}${parseInt(y) + i}` : `${parseInt(x) + i}${y}`;
       const cell = this.dialog.querySelector(`.col-${cellNo}`);
       // collision check
       if (cell.classList.contains("deploy")) {
@@ -52,7 +84,6 @@ export default class Start {
     if (cells.length > 0) {
       cells.forEach((c) => {
         c.classList.add("deploy");
-        // this.player.board.deploy();
       });
       return true;
     }
@@ -75,22 +106,27 @@ export default class Start {
 
     this.cells.forEach((cell) => {
       cell.addEventListener("mouseover", (e) => {
-        if (this.select.value) this.#deployShipPreview(cell, length, "v");
+        if (this.select.value) this.#deployShipPreview(cell, length, this.align.value);
       });
       cell.addEventListener("mouseout", () => {
-        if (this.select.value) this.#deployShipPreview(cell, length, "v");
+        if (this.select.value) this.#deployShipPreview(cell, length, this.align.value);
       });
       cell.addEventListener("click", () => {
         if (this.select.value) {
-          const deployed = this.#deployShip(cell, length, "v");
+          const coords = cell.className.split("-")[1].split("").map(Number);
+          const deployed = this.#deployShip(cell, length, this.align.value);
           if (deployed) {
+            this.player.board.deploy(selectedShip, coords, this.align.value);
             let selected = this.select.querySelector(`.${ship}`);
             if (this.select.value) {
               this.select.removeChild(selected);
               if(this.select.value) [ship, selectedShip, length] = this.#getShipVals(
                 this.select.value,
               );
-              else this.select.style.visibility = "hidden";
+              else {
+                this.select.style.visibility = "hidden";
+                this.align.style.visibility = "hidden";
+              }
             }
           }
         }
