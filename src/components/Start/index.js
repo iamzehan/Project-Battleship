@@ -17,6 +17,7 @@ export default class Start {
     this.startBtn = document.createElement("button");
     this.startBtn.className = "start-btn";
     this.startBtn.textContent = "Start";
+    this.startBtn.style.visibility = "hidden";
     this.startBtn.addEventListener("click", ()=>{
       this.close()
     });
@@ -133,6 +134,7 @@ export default class Start {
               else {
                 this.select.style.visibility = "hidden";
                 this.align.style.visibility = "hidden";
+                this.startBtn.style.visibility = "visible";
               }
             }
           }
