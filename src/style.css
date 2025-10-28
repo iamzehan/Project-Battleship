@@ -13,9 +13,9 @@ body {
   background-image: url("../assets/battleship_background.jpg");
   background-size: cover;
 }
-.container.hide{
+/* .container.hide{
   display: none;
-}
+} */
 .container {
   height: 800px;
   aspect-ratio: 1/1;
@@ -74,10 +74,11 @@ body {
   flex-direction: column;
   border: 1px solid white;
   box-shadow: 0 0 2px 1px grey;
-  .row , .row > div{
+  .row,
+  .row > div {
     display: flex;
   }
-  .row > div{
+  .row > div {
     justify-content: center;
     align-items: center;
   }
@@ -86,13 +87,12 @@ body {
     flex: 1;
     box-shadow: 0 0 5px -1px white inset;
     transition: 0.1s background-color ease-in-out;
-    span.marker{
+    span.marker {
       height: 50%;
       aspect-ratio: 1/1;
       display: flex;
       justify-content: center;
       align-items: center;
-
     }
   }
   .row:not(:last-of-type) {
@@ -114,18 +114,28 @@ body {
   }
 }
 
-.gameboard .attack{
+.gameboard .player {
+  .row > div[class*="col-"].deploy {
+    background-color: lightgreen;
+    border-color: lightgreen;
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.gameboard .attack {
   opacity: 1;
   box-shadow: inherit;
   animation: 1s flashOut linear alternate infinite;
-  .row > div:hover{
-    cursor: crosshair!important;
+  .row > div:hover {
+    cursor: crosshair !important;
   }
 }
 .turn {
   animation: 1s flashIn linear alternate infinite;
 }
-.gameboard > *{
+.gameboard > * {
   box-shadow: 0 0 15px 12px lightcoral;
 }
 
@@ -140,12 +150,10 @@ body {
 
 @keyframes flashIn {
   from {
-    box-shadow:
-    12px 12px 15px -12px rgba(0, 0, 0, 0.568);
+    box-shadow: 12px 12px 15px -12px rgba(0, 0, 0, 0.568);
   }
   to {
     background-color: lightcoral;
-    box-shadow: 
-    12px 12px 15px -12px lightcoral;
+    box-shadow: 12px 12px 15px -12px lightcoral;
   }
 }
