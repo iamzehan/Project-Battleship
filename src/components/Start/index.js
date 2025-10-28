@@ -1,5 +1,4 @@
 import "./style.css";
-import template from "./index.html";
 import { Player } from "../../game_logic";
 
 export default class Start {
