@@ -55,6 +55,11 @@ dialog.container .player {
   }
 }
 
+.ships {
+  font-size: 2rem;
+  border-radius: 0.2em;
+}
+
 @keyframes pulse {
   from {
     opacity: 0.5;
