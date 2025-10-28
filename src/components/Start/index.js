@@ -6,17 +6,22 @@ export default class Start {
     this.player = new Player();
     this.dialog = document.createElement("dialog");
     this.dialog.className = "container";
-
     this.select = this.#createSelectElement();
-    this.dialog.appendChild(this.select);
-
     this.align = this.#createAlignElement();
-    this.dialog.appendChild(this.align);
-
+    
     this.gameboard = document.body
       .querySelector("div.gameboard>div.player")
       .cloneNode(true);
     this.dialog.appendChild(this.gameboard);
+    
+    this.startBtn = document.createElement("button");
+    this.startBtn.className = "start-btn";
+    this.startBtn.textContent = "Start";
+    this.startBtn.addEventListener("click", ()=>{
+      this.close()
+    });
+    this.dialog.appendChild(this.startBtn);
+
     this.cells = this.gameboard.querySelectorAll(".row>div");
     this.#placingShipEvent();
   }
@@ -31,6 +36,7 @@ export default class Start {
       option.textContent = k[0].toUpperCase()+k.slice(1,);
       select.appendChild(option)
     })
+    this.dialog.appendChild(select);
     return select;
   }
   #createAlignElement(){
@@ -46,6 +52,8 @@ export default class Start {
 
     align.appendChild(option1);
     align.appendChild(option2);
+
+    this.dialog.appendChild(align);
 
     return align;
     
@@ -133,8 +141,10 @@ export default class Start {
     });
   }
 
-  load() {
+  open(){
+    this.dialog.showModal();
+  }
+  close(){
     this.dialog.close();
-    return this.dialog;
   }
 }
