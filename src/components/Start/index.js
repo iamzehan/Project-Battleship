@@ -1,9 +1,16 @@
 import "./style.css";
+import template from "./index.html";
+import { Player } from "../../game_logic";
 
 export default class Start {
   constructor() {
+    this.player = new Player();
     this.dialog = document.createElement("dialog");
     this.dialog.className = "container";
+    this.select = document.createElement("select");
+    this.select.className = "ships";
+    this.select.innerHTML = template;
+    this.dialog.appendChild(this.select);
     this.gameboard = document.body
       .querySelector("div.gameboard>div.player")
       .cloneNode(true);
@@ -42,22 +49,51 @@ export default class Start {
 
   #deployShip(cell, length, align) {
     const cells = this.#deployShipPreview(cell, length, align);
-    return (cells.length>0)?
-    cells.forEach((c) => {
+    if (cells.length > 0) {
+      cells.forEach((c) => {
         c.classList.add("deploy");
-      })
-    :null;
+        // this.player.board.deploy();
+      });
+      return true;
+    }
+    return false;
+  }
+  #getShipVals(val) {
+    let ship = val ? val : this.select.value;
+    let selectedShip = this.player.ships[ship];
+    let length = selectedShip.length;
+    return [ship, selectedShip, length];
   }
   #placingShipEvent() {
+    let [ship, selectedShip, length] = this.#getShipVals();
+
+    this.select.addEventListener("change", (e) => {
+      ship = e.target.value;
+      selectedShip = this.player.ships[ship];
+      length = selectedShip.length;
+    });
+
     this.cells.forEach((cell) => {
       cell.addEventListener("mouseover", (e) => {
-        this.#deployShipPreview(cell, 3, "v");
+        if (this.select.value) this.#deployShipPreview(cell, length, "v");
       });
       cell.addEventListener("mouseout", () => {
-        this.#deployShipPreview(cell, 3, "v");
+        if (this.select.value) this.#deployShipPreview(cell, length, "v");
       });
       cell.addEventListener("click", () => {
-        this.#deployShip(cell, 3, "v");
+        if (this.select.value) {
+          const deployed = this.#deployShip(cell, length, "v");
+          if (deployed) {
+            let selected = this.select.querySelector(`.${ship}`);
+            if (this.select.value) {
+              this.select.removeChild(selected);
+              if(this.select.value) [ship, selectedShip, length] = this.#getShipVals(
+                this.select.value,
+              );
+              else this.select.style.visibility = "hidden";
+            }
+          }
+        }
       });
     });
   }
