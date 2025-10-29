@@ -135,9 +135,6 @@ body {
 .turn {
   animation: 1s flashIn linear alternate infinite;
 }
-.gameboard > * {
-  box-shadow: 0 0 15px 12px lightcoral;
-}
 
 @keyframes flashOut {
   from {

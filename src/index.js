@@ -22,22 +22,49 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+const toggleBetween=()=> {
+  const turn = document.querySelectorAll(".players > h2");
+  const attack = document.querySelectorAll(".gameboard > div");
+  turn.forEach((t)=> {
+    t.classList.toggle("turn");
+  })
+  attack.forEach((a)=> {
+    a.classList.toggle("attack");
+  })
+}
 
-const cells = document.querySelectorAll("div.attack>div.row>div");
+const getCells=()=>{
+  return document.querySelectorAll("div.attack>div.row>div");
+}
+
+const getCurrentTurn=()=> {
+  const turn = document.querySelector(".turn");
+  console.log(turn)
+  return (turn.textContent === "You")? "computer"
+: "player";
+}
+
 const comp = players["computer"];
-
 comp.board.deploy(comp.ships.destroyer, [0, 0]);
 comp.board.deploy(comp.ships.corvette, [5, 9], "vertical");
+players["computer"] = comp;
+
+let cells = getCells();
+
+let current = players[getCurrentTurn()];
 
 cells.forEach((cell) => {
   cell.addEventListener("click", () => {
     const [x, y] = cell.className.split("-")[1].split("").map(Number);
-    if (comp.board.receiveAttack([parseInt(x), parseInt(y)])) {
+    if (current.board.receiveAttack([x, y])) {
       cell.innerHTML = "<span class='marker'>🔥</span>";
       cell.classList.add("hit");
     } else {
       cell.innerHTML = "<span class='marker'>🌊</span>";
       cell.classList.add("miss");
     }
+    toggleBetween();
+    cells = getCells();
+    current = players[getCurrentTurn()];
   });
 });
